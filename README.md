@@ -17,7 +17,7 @@
 
 This project implements a parallelized solution for constructing **Minimum Spanning Trees (MST)** on massive dense graphs (10M+ edges).
 
-Traditional serial algorithms like Kruskal's ($O(E \log E)$) become bottlenecks when dealing with large-scale infrastructure networks. By utilizing **OpenMP** and a **Domain Decomposition Strategy**, this project distributes the heavy sorting workload across multiple processor cores, achieving significant speedups over sequential implementations.
+Traditional serial algorithms like Kruskal's $(O(E \log E))$ become bottlenecks when dealing with large-scale infrastructure networks. By utilizing **OpenMP** and a **Domain Decomposition Strategy**, this project distributes the heavy sorting workload across multiple processor cores, achieving significant speedups over sequential implementations.
 
 ### ✨ Key Features
 * **Parallel Filtering:** Implements the "Filter-Kruskal" strategy to discard 99% of redundant edges locally in parallel.
