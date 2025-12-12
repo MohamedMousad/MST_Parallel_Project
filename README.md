@@ -5,13 +5,17 @@
 ![Status](https://img.shields.io/badge/Status-Completed-success.svg)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-> **A High-Performance Graph Optimization System** > Accelerating Minimum Spanning Tree (MST) construction using the **Parallel Filter-Kruskal Algorithm**.
+<br />
+
+> **A High-Performance Graph Optimization System**
+>
+> Accelerating Minimum Spanning Tree (MST) construction using the **Parallel Filter-Kruskal Algorithm**.
 
 ---
 
 ## 📖 About The Project
 
-This project implements a parallelized solution for constructing **Minimum Spanning Trees (MST)** on massive dense graphs (10M+ edges). 
+This project implements a parallelized solution for constructing **Minimum Spanning Trees (MST)** on massive dense graphs (10M+ edges).
 
 Traditional serial algorithms like Kruskal's ($O(E \log E)$) become bottlenecks when dealing with large-scale infrastructure networks. By utilizing **OpenMP** and a **Domain Decomposition Strategy**, this project distributes the heavy sorting workload across multiple processor cores, achieving significant speedups over sequential implementations.
 
@@ -24,6 +28,7 @@ Traditional serial algorithms like Kruskal's ($O(E \log E)$) become bottlenecks 
 ---
 
 ## 👥 Team Members
+
 **Computer and Control Dept | Port Said University**
 
 * 👨‍💻 **Mohamed Mousad**
@@ -63,3 +68,59 @@ You can compile the project using `g++` directly from the terminal:
 ```bash
 # Compile with OpenMP flag
 g++ main.cpp kruskal.cpp -o mst_app -fopenmp -O3
+
+```
+
+### Running the Benchmark
+
+Run the executable to start the automatic benchmark suite. It will test various thread counts and save the results to a CSV file.
+
+```bash
+# Windows
+./mst_app.exe
+
+# Linux / macOS
+./mst_app
+```
+
+-----
+
+## 📂 Project Structure
+
+```text
+├── 📄 main.cpp          # Benchmark engine & Entry point
+├── 📄 kruskal.cpp       # Implementation of MST logic
+├── 📄 kruskal.h         # Header file (API definitions)
+├── 📄 generate_graphs.py # Python script to plot results
+├── 📊 benchmark_results.csv # Output data (Generated after run)
+└── 🖼️ graph_speedup.png     # Speedup Graph (Generated after run)
+```
+
+-----
+
+## 🧠 Algorithm: Filter-Kruskal
+
+The parallel strategy follows a **Map-Reduce** pattern:
+
+1.  **Partitioning:** The massive list of edges is split into chunks.
+2.  **Local Filter (Map):** Each thread sorts its chunk and runs a local Kruskal algorithm. This removes edges that form cycles within the chunk, reducing the dataset size by \~99%.
+3.  **Global Merge (Reduce):** The few surviving edges from all threads are merged safely.
+4.  **Final MST:** A final quick serial pass connects the remaining components.
+
+-----
+
+## 📊 Visualization
+
+To generate the performance graphs included in our report:
+
+1.  Run the C++ application (it generates `benchmark_results.csv`).
+2.  Run the Python script:
+    ```bash
+    python generate_graphs.py
+    ```
+
+-----
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
